@@ -21,7 +21,11 @@ public class HttpConnectionWorkerThread extends Thread {
     @Override
     public void run() {
         try (InputStream inputStream = socket.getInputStream(); OutputStream outputStream = socket.getOutputStream()) {
-            // TODO: read request
+            // read request
+            int _byte;
+            while ((_byte = inputStream.read()) >= 0) {
+                System.out.print((char)_byte);
+            }
 
             // write response
             String html = """
