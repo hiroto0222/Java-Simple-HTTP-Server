@@ -3,12 +3,11 @@ package com.hiroto0222.httpserver;
 import com.hiroto0222.httpserver.config.Configuration;
 import com.hiroto0222.httpserver.config.ConfigurationManager;
 import com.hiroto0222.httpserver.core.ServerListenerThread;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * Driver Class for HTTP Server
@@ -24,14 +23,16 @@ import java.net.Socket;
  * 7. close TCP socket connection on port
  */
 public class HttpServer {
+    private final static Logger LOGGER = LoggerFactory.getLogger(HttpServer.class);
+
     public static void main(String[] args) {
-        System.out.println("Server starting...");
+        LOGGER.info("Server starting...");
 
         // load configurations
         ConfigurationManager.getInstance().loadConfigurationFile("src/main/resources/http.json");
         Configuration conf = ConfigurationManager.getInstance().getCurrentConfiguration();
-        System.out.println("Using Port: " + conf.getPort());
-        System.out.println("Using WebRoot: " + conf.getWebroot());
+        LOGGER.info("Using Port: {}", conf.getPort());
+        LOGGER.info("Using WebRoot: {}", conf.getWebroot());
 
         // create TCP socket on thread
         ServerListenerThread serverListenerThread;

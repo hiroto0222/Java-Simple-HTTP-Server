@@ -1,5 +1,9 @@
 package com.hiroto0222.httpserver.core;
 
+import com.hiroto0222.httpserver.HttpServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,6 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerListenerThread extends Thread{
+    private final static Logger LOGGER = LoggerFactory.getLogger(HttpServer.class);
+
     private int port;
     private String webRoot;
     ServerSocket serverSocket;
@@ -21,6 +27,8 @@ public class ServerListenerThread extends Thread{
     public void run() {
         try {
             Socket socket = serverSocket.accept();
+
+            LOGGER.info(" * Connection Accepted: {}", socket.getInetAddress());
 
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = socket.getOutputStream();
